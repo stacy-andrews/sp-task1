@@ -13,7 +13,8 @@ end
 
 OPERATIONS = {
   times: lambda { |left, right| left*right },
-  plus: lambda { |left, right| left+right }
+  plus: lambda { |left, right| left+right },
+  minus: lambda { |left, right| left-right }
 }
 
 OPERATIONS.each do |key, operation|
@@ -36,14 +37,14 @@ class Operation
   end
 
   def apply(number)
-    if @left == -1
-      @left = number
+    if @right == -1
+      @right = number
 
       return
     end
 
-    if @right == -1
-      @right = number
+    if @left == -1
+      @left = number
     end
   end
 
