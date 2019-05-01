@@ -1,9 +1,8 @@
 require 'humanize'
 
-(0..9).each do |method|
-  define_method method.humanize do |op=Operation.new|
-    p "writing " + method.to_s
-    op.apply method
+(0..9).each do |number|
+  define_method number.humanize do |op=Operation.new|
+    op.apply number
     if op.can_calc?
       return op.calc
     end
@@ -12,15 +11,16 @@ require 'humanize'
   end
 end
 
-def times(operation)
-  operation.operator = :times
-  operation
-end
-
-
 OPERATIONS = {
   times: lambda { |left, right| left*right }
 }
+
+OPERATIONS.each do |key, operation|
+  define_method key.to_s do |op|
+    op.operator = operation
+    op
+  end
+end
 
 class Operation
   def initialize
@@ -31,9 +31,7 @@ class Operation
   attr_accessor :left, :right, :operator
 
   def calc
-    op = OPERATIONS[@operator]
-
-    op.call @left, @right
+    @operator.call @left, @right
   end
 
   def apply(number)
