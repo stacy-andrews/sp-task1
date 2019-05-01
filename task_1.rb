@@ -17,6 +17,11 @@ def times(operation)
   operation
 end
 
+
+OPERATIONS = {
+  times: lambda { |left, right| left*right }
+}
+
 class Operation
   def initialize
     @left = -1
@@ -26,9 +31,9 @@ class Operation
   attr_accessor :left, :right, :operator
 
   def calc
-    if @operator == :times
-      @left * @right
-    end
+    op = OPERATIONS[@operator]
+
+    op.call @left, @right
   end
 
   def apply(number)
