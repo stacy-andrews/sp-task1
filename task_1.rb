@@ -1,13 +1,12 @@
 require 'humanize'
 
 (0..9).each do |number|
-  define_method number.humanize do |op=Operation.new|
-    op.apply number
-    if op.can_calc?
-      return op.calc
-    end
+  define_method number.humanize do |calculation=Calculation.new|
+    calculation.apply number
 
-    op
+    return calculation.calc if calculation.can_calc?
+
+    calculation
   end
 end
 
@@ -20,36 +19,40 @@ OPERATIONS = {
 
 OPERATIONS.each do |key, operation|
   define_method key.to_s do |op|
-    op.operator = operation
+    op.apply_operator(operation)
     op
   end
 end
 
-class Operation
+class Calculation
   def initialize
-    @left = -1
-    @right = -1
+    self.left = -1
+    self.right = -1
   end
 
-  attr_accessor :left, :right, :operator
-
   def calc
-    @operator.call @left, @right
+    operator.call left, right
   end
 
   def apply(number)
-    if @right == -1
-      @right = number
+    return self.right = number if not_set?(right)
 
-      return
-    end
+    self.left = number if not_set?(left)
+  end
 
-    if @left == -1
-      @left = number
-    end
+  def apply_operator(operation)
+    @operator = operation
   end
 
   def can_calc?
-    @left >=0 && @right >=0
+    left >=0 && right >=0
+  end
+
+  private
+
+  attr_accessor :left, :right, :operator
+
+  def not_set?(value)
+    value == -1
   end
 end
