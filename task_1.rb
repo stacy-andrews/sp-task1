@@ -14,7 +14,8 @@ end
 OPERATIONS = {
   times: lambda { |left, right| left*right },
   plus: lambda { |left, right| left+right },
-  minus: lambda { |left, right| left-right }
+  minus: lambda { |left, right| left-right },
+  divided_by: lambda { |left, right| left/right }
 }
 
 OPERATIONS.each do |key, operation|
