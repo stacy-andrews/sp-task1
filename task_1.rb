@@ -12,7 +12,8 @@ require 'humanize'
 end
 
 OPERATIONS = {
-  times: lambda { |left, right| left*right }
+  times: lambda { |left, right| left*right },
+  plus: lambda { |left, right| left+right }
 }
 
 OPERATIONS.each do |key, operation|
