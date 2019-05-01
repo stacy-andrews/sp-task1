@@ -1,5 +1,6 @@
 require 'humanize'
 
+
 (0..9).each do |number|
   define_method number.humanize do |calculation=Calculation.new|
     calculation.apply number

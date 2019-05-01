@@ -1,6 +1,6 @@
-require_relative '../task_1'
+require_relative '../calculation'
 
-describe 'Split Payments Task 1' do
+describe 'Calculation (Split Payments Task 1)' do
   it 'can run one times example' do
     expect(six(times(five))).to eq(30)
   end
